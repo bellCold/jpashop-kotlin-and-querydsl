@@ -14,8 +14,8 @@ abstract class Item {
     private val id: Long? = null
 
     private val name: String? = null
-    private val price = 0
-    private val stockQuantity = 0
+    private val price: Int? = null
+    private val stockQuantity: Int? = null
 
     @ManyToMany(mappedBy = "items")
     private val categories: List<Category> = ArrayList()
