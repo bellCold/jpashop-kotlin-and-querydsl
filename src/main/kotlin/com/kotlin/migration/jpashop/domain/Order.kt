@@ -5,28 +5,25 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "orders")
-class Order {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+class Order(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    private val id: Long? = null
+    val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private val member: Member? = null
+    val member: Member,
 
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL])
-    private val orderItems: List<OrderItem> = ArrayList()
+    val orderItems: MutableList<OrderItem> = mutableListOf(),
 
     @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "delivery_id")
-    private val delivery: Delivery? = null
+    val delivery: Delivery,
 
-    private val orderDate: LocalDateTime? = null //주문시간
-
+    val orderDate: LocalDateTime,
 
     @Enumerated(EnumType.STRING)
-    private val status: OrderStatus? = null
+    val status: OrderStatus
 
-}
+)

@@ -4,28 +4,24 @@ import com.kotlin.migration.jpashop.domain.item.Item
 import jakarta.persistence.*
 
 @Entity
-class Category {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+class Category(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private val id: Long? = null
+    val id: Long = 0,
 
-    private val name: String? = null
+    val name: String,
 
-    @ManyToMany
-    @JoinTable(
+    @ManyToMany @JoinTable(
         name = "category_item",
         joinColumns = [JoinColumn(name = "category_id")],
         inverseJoinColumns = [JoinColumn(name = "item_id")]
     )
-    private val items: List<Item> = ArrayList()
+    val items: MutableList<Item> = mutableListOf(),
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
-    private val parent: Category? = null
+    val parent: Category,
 
     @OneToMany(mappedBy = "parent")
-    private val child: List<Category> = ArrayList()
-
-}
+    val child: MutableList<Category> = mutableListOf()
+)

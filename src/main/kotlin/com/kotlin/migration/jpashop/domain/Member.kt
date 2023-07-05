@@ -4,19 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 
 @Entity
-class Member {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+class Member(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
-    private val id: Long? = null
+    val id: Long = 0,
 
-    private val name: String? = null
+    val name: String,
 
     @Embedded
-    private val address: Address? = null
+    val address: Address?,
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")
-    private val orders: List<Order> = ArrayList()
-}
+    val orders: MutableList<Order> = mutableListOf()
+)

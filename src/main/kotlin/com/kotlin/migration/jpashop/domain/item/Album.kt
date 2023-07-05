@@ -5,7 +5,9 @@ import jakarta.persistence.Entity
 
 @Entity
 @DiscriminatorValue("A")
-class Album : Item() {
-    private val artist: String? = null
-    private val etc: String? = null
-}
+class Album(
+    name: String,
+    price: Long,
+    stockQuantity: Int,
+    val artist: String
+) : Item(name, price, stockQuantity)

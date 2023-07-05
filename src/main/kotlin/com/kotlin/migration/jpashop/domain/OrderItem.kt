@@ -5,22 +5,20 @@ import com.kotlin.migration.jpashop.domain.item.Item
 import jakarta.persistence.*
 
 @Entity
-class OrderItem {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+class OrderItem(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_item_id")
-    private val id: Long? = null
+    val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
-    private val item: Item? = null
+    val item: Item,
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    private val order: Order? = null
+    val order: Order,
 
-    private val orderPrice = 0 // 주문 가격
-    private val count = 0 // 주문 수량
-}
+    val orderPrice: Int = 0, // 주문 가격
+    val count: Int = 0 // 주문 수량
+)

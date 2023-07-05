@@ -5,18 +5,21 @@ import jakarta.persistence.*
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "dtype")
-abstract class Item {
+abstract class Item(
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "item_id")
-    private val id: Long? = null
+    val name: String,
 
-    private val name: String? = null
-    private val price: Int? = null
-    private val stockQuantity: Int? = null
+    val price: Long,
+
+    val stockQuantity: Int,
 
     @ManyToMany(mappedBy = "items")
-    private val categories: List<Category> = ArrayList()
+    val categories: MutableList<Category> = mutableListOf(),
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0
+) {
+    fun update(name: String, price: Int, stockQuantity: Int) {
+        
+    }
 }
