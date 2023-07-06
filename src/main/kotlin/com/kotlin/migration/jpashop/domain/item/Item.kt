@@ -7,11 +7,11 @@ import jakarta.persistence.*
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 abstract class Item(
 
-    val name: String,
+    var name: String,
 
-    val price: Long,
+    var price: Int,
 
-    val stockQuantity: Int,
+    var stockQuantity: Int,
 
     @ManyToMany(mappedBy = "items")
     val categories: MutableList<Category> = mutableListOf(),
