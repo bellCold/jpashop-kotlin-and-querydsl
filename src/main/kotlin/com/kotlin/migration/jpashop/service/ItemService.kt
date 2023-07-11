@@ -17,12 +17,8 @@ class ItemService(
 
     @Transactional
     fun updateItem(itemId: Long, name: String, price: Int, stockQuantity: Int) {
-        val item: Item = itemRepository.findById(itemId).orElseThrow { RuntimeException("Item not found") }
-        item.apply {
-            this.name = name
-            this.price = price
-            this.stockQuantity = stockQuantity
-        }
+        itemRepository.findById(itemId).orElseThrow { RuntimeException("Item not found") }
+            .update(name, price, stockQuantity)
     }
 
     fun findItems(): List<Item> {

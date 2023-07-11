@@ -9,13 +9,13 @@ class Delivery(
     @Column(name = "delivery_id")
     val id: Long = 0,
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
-    val order: Order,
-
     @Embedded
-    val address: Address,
+    var address: Address,
 
     @Enumerated(EnumType.STRING)
-    val status: DeliveryStatus
+    var status: DeliveryStatus,
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
+    val order: Order? = null
 )

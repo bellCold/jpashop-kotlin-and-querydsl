@@ -9,12 +9,13 @@ class Member(
     @Column(name = "member_id")
     val id: Long = 0,
 
-    val name: String,
+    var name: String,
 
     @Embedded
-    val address: Address?,
+    val address: Address,
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")
     val orders: MutableList<Order> = mutableListOf()
-)
+) {
+}

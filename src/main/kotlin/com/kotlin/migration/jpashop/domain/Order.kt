@@ -26,4 +26,10 @@ class Order(
     @Enumerated(EnumType.STRING)
     val status: OrderStatus
 
-)
+) {
+    companion object {
+        fun createOrder(member: Member, delivery: Delivery, orderItem: Any): Order {
+
+        }
+    }
+}
