@@ -17,18 +17,22 @@ class OrderItem(
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    val order: Order? = null,
+    var order: Order? = null,
 
-    val orderPrice: Int = 0, // 주문 가격
+    val orderPrice: Int? = 0, // 주문 가격
     val count: Int = 0 // 주문 수량
 ) {
+    fun cancel() {
+        item.addStock(this.count)
+    }
+
     companion object {
-        fun createOrderItem(item: Item, price: Int, count: Int): OrderItem {
+        fun createOrderItem(item: Item, orderPrice: Int? = 0, count: Int): OrderItem {
             return OrderItem(
                 item = item,
-                orderPrice =  price,
+                orderPrice =  orderPrice,
                 count = count
-            )
+            ).also { item.removeStock(count) }
         }
     }
 }

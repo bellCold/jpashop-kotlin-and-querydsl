@@ -24,12 +24,44 @@ class Order(
     val orderDate: LocalDateTime,
 
     @Enumerated(EnumType.STRING)
-    val status: OrderStatus
+    var status: OrderStatus
 
 ) {
-    companion object {
-        fun createOrder(member: Member, delivery: Delivery, orderItem: Any): Order {
+    // 연관관계 메소드
+    private fun addOrderItem(orderItem: OrderItem) {
+        orderItems.add(orderItem)
+        orderItem.order = this
+    }
 
+
+    // 생성 메소드
+    companion object {
+        fun createOrder(member: Member, delivery: Delivery, orderItems: Array<OrderItem>): Order {
+            val order = Order(
+                member = member,
+                delivery = delivery,
+                status = OrderStatus.ORDER,
+                orderDate = LocalDateTime.now()
+            )
+
+            orderItems.forEach { orderItem ->
+                order.addOrderItem(orderItem)
+            }
+
+            return order
         }
     }
+
+    // 비지니스 로직
+    fun cancel() {
+        if (delivery.status == DeliveryStatus.COMP) {
+            throw IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.")
+        }
+
+        this.status = OrderStatus.CANCEL
+        orderItems.forEach { orderItem ->
+            orderItem.cancel()
+        }
+    }
+
 }

@@ -9,14 +9,15 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 class OrderService(
     private val orderRepository: OrderRepository,
     private val memberRepository: MemberRepository,
     private val itemRepository: ItemRepository
 ) {
 
-    fun order(memberId: Long, itemId: Long, count: Int) {
+    @Transactional
+    fun order(memberId: Long, itemId: Long, count: Int): Long {
         val member: Member = memberRepository.findById(memberId).orElseThrow { RuntimeException("Member not found") }
         val item: Item = itemRepository.findById(itemId).orElseThrow { RuntimeException("Item not found") }
 
@@ -29,14 +30,28 @@ class OrderService(
 
         val orderItem = OrderItem.createOrderItem(
             item = item,
-            price = item.price,
+            orderPrice = item.price,
             count = count
         )
 
-        val order = Order.createOrder(member, delivery, orderItem)
+        val order = Order.createOrder(
+            member = member,
+            delivery = delivery,
+            orderItems = arrayOf(orderItem)
+        )
 
-        orderRepository.save(order)
+        return orderRepository.save(order).id
     }
 
 
+    @Transactional
+    fun cancelOrder(orderId: Long) {
+        orderRepository.findById(orderId).orElseThrow { RuntimeException("Order not found") }.cancel()
+    }
+
+
+    // Todo
+//    fun findOrders(orderSearch: OrderSearch): List<Order> {
+//        return orderRepository.findAllByString(orderSearch)
+//    }
 }

@@ -7,7 +7,7 @@ import jakarta.persistence.Entity
 @DiscriminatorValue("A")
 class Album(
     name: String,
-    price: Long,
+    price: Int,
     stockQuantity: Int,
     val artist: String
-) : Item(name, price, stockQuantity)
+) : Item(name = name, price = price, stockQuantity = stockQuantity)

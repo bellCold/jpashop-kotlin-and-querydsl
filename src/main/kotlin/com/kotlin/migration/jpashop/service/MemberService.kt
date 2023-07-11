@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.lang.RuntimeException
 
 @Service
+@Transactional(readOnly = true)
 class MemberService(
     private val memberRepository: MemberRepository
 ) {
@@ -35,7 +36,7 @@ class MemberService(
 
     @Transactional
     fun update(id: Long, name: String) {
-        val member: Member = memberRepository.findById(id).orElseThrow { RuntimeException("Member not found") }
-        member.also { it.name = name }
+        memberRepository.findById(id).orElseThrow { RuntimeException("Member not found") }
+            .also { it.name = name }
     }
 }

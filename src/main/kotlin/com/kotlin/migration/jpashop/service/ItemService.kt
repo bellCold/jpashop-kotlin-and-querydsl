@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional(readOnly = true)
 class ItemService(
     private val itemRepository: ItemRepository
 ) {
@@ -18,7 +19,7 @@ class ItemService(
     @Transactional
     fun updateItem(itemId: Long, name: String, price: Int, stockQuantity: Int) {
         itemRepository.findById(itemId).orElseThrow { RuntimeException("Item not found") }
-            .update(name, price, stockQuantity)
+            .update(name = name, price = price, stockQuantity = stockQuantity)
     }
 
     fun findItems(): List<Item> {
