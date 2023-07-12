@@ -17,5 +17,4 @@ class Member(
     @JsonIgnore
     @OneToMany(mappedBy = "member")
     val orders: MutableList<Order> = mutableListOf()
-) {
-}
+)

@@ -38,8 +38,7 @@ class InitService(
         val orderItem2 = OrderItem.createOrderItem(item = book2, orderPrice = 20000, count = 2)
 
         val delivery = createDelivery(member)
-        val order =
-            Order.createOrder(member = member, delivery = delivery, orderItems = arrayOf(orderItem1, orderItem2))
+        val order = Order.createOrder(member = member, delivery = delivery, orderItems = arrayOf(orderItem1, orderItem2))
         em.persist(order)
     }
 
@@ -61,7 +60,6 @@ class InitService(
             Order.createOrder(member = member, delivery = delivery, orderItems = arrayOf(orderItem1, orderItem2))
         em.persist(order)
     }
-
 
     private fun createMember(name: String, city: String, street: String, zipcode: String): Member {
         return Member(
