@@ -72,7 +72,7 @@ class InitService(
         return Book(
             name = name,
             price = price,
-            stockQuantity = stockQuantity,
+            stockQuantity = stockQuantity
         )
     }
 
