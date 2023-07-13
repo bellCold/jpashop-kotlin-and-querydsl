@@ -12,7 +12,7 @@ class Member(
     var name: String,
 
     @Embedded
-    val address: Address,
+    val address: Address? = null,
 
     @JsonIgnore
     @OneToMany(mappedBy = "member")

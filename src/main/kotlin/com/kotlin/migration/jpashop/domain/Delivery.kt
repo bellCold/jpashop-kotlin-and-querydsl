@@ -10,7 +10,7 @@ class Delivery(
     val id: Long = 0,
 
     @Embedded
-    var address: Address,
+    var address: Address?,
 
     @Enumerated(EnumType.STRING)
     var status: DeliveryStatus? = null,
