@@ -5,6 +5,7 @@ import com.kotlin.migration.jpashop.domain.item.Item
 import com.kotlin.migration.jpashop.repository.ItemRepository
 import com.kotlin.migration.jpashop.repository.MemberRepository
 import com.kotlin.migration.jpashop.repository.OrderRepository
+import com.kotlin.migration.jpashop.repository.OrderSearch
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -51,7 +52,7 @@ class OrderService(
 
 
     // Todo
-//    fun findOrders(orderSearch: OrderSearch): List<Order> {
-//        return orderRepository.findAllByString(orderSearch)
-//    }
+    fun findOrders(orderSearch: OrderSearch): List<Order> {
+        return orderRepository.findAllByString(orderSearch)
+    }
 }

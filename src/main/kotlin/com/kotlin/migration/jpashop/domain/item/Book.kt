@@ -9,6 +9,6 @@ class Book(
     name: String,
     price: Int,
     stockQuantity: Int,
-    val author: String? = null,
-    val isbn: String? = null
+    var author: String? = null,
+    var isbn: String? = null
 ) : Item(name = name, price = price, stockQuantity = stockQuantity)

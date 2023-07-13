@@ -1,10 +1,10 @@
 package com.kotlin.migration.jpashop.controller
 
 data class BookForm(
-    val id: Long,
-    val name: String,
-    val price: Int,
-    val stockQuantity: Int,
-    val author: String,
-    val isbn: String
+    var id: Long = 0 ,
+    var name: String = "",
+    var price: Int = 0,
+    var stockQuantity: Int = 0,
+    var author: String? = "",
+    var isbn: String? = ""
 )
