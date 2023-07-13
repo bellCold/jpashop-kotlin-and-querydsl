@@ -4,13 +4,13 @@ import com.kotlin.migration.jpashop.domain.Address
 import com.kotlin.migration.jpashop.domain.Member
 import com.kotlin.migration.jpashop.service.MemberService
 import jakarta.validation.Valid
+import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
 
-@RestController
+@Controller
 class MemberController(private val memberService: MemberService) {
 
     @GetMapping("/members/new")
@@ -36,7 +36,7 @@ class MemberController(private val memberService: MemberService) {
     @GetMapping("/members")
     fun list(model: Model): String {
         model.addAttribute("members", memberService.findMembers())
-        return "members/membersList"
+        return "members/memberList"
     }
 
 }

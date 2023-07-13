@@ -3,14 +3,30 @@ package com.kotlin.migration.jpashop.repository
 import com.kotlin.migration.jpashop.domain.Order
 import jakarta.persistence.EntityManager
 import jakarta.persistence.TypedQuery
+import org.springframework.stereotype.Repository
 import org.springframework.util.StringUtils
 
+@Repository
 class OrderRepository(private val em: EntityManager) {
+
+    fun save(order: Order): Order {
+        em.persist(order)
+        return order
+    }
+
+    fun findById(id: Long): Order {
+        return em.find(Order::class.java, id)
+    }
+
+    fun findAll(id: Long): List<Order> {
+        return em.createQuery("select o from Order o", Order::class.java)
+            .resultList
+    }
+
+
     fun findAllByString(orderSearch: OrderSearch): List<Order?> {
         var jpql = "select o from Order o join o.member m"
         var isFirstCondition = true
-
-        //주문 상태 검색
 
         //주문 상태 검색
         if (orderSearch.orderStatus != null) {
@@ -22,8 +38,6 @@ class OrderRepository(private val em: EntityManager) {
             }
             jpql += " o.status = :status"
         }
-
-        //회원 이름 검색
 
         //회원 이름 검색
         if (StringUtils.hasText(orderSearch.memberName)) {

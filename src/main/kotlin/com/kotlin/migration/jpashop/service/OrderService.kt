@@ -16,7 +16,6 @@ class OrderService(
     private val memberRepository: MemberRepository,
     private val itemRepository: ItemRepository
 ) {
-
     @Transactional
     fun order(memberId: Long, itemId: Long, count: Int): Long {
         val member: Member = memberRepository.findById(memberId).orElseThrow { RuntimeException("Member not found") }
@@ -47,12 +46,10 @@ class OrderService(
 
     @Transactional
     fun cancelOrder(orderId: Long) {
-        orderRepository.findById(orderId).orElseThrow { RuntimeException("Order not found") }.cancel()
+        orderRepository.findById(orderId).cancel()
     }
 
-
-    // Todo
-    fun findOrders(orderSearch: OrderSearch): List<Order> {
+    fun findOrders(orderSearch: OrderSearch): List<Order?> {
         return orderRepository.findAllByString(orderSearch)
     }
 }

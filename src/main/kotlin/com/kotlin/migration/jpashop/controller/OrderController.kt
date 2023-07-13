@@ -37,8 +37,10 @@ class OrderController(
         return "redirect:/orders"
     }
 
+    // 현재 에러
     @GetMapping("/orders")
     fun orderList(@ModelAttribute("orderSearch") orderSearch: OrderSearch, model: Model): String {
+        println("test")
         model.addAttribute("orders", orderService.findOrders(orderSearch))
         return "order/orderList"
     }
