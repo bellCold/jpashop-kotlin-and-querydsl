@@ -19,7 +19,7 @@ class OrderItem(
     @JoinColumn(name = "order_id")
     var order: Order? = null,
 
-    val orderPrice: Int? = 0, // 주문 가격
+    val orderPrice: Int = 0, // 주문 가격
     val count: Int = 0 // 주문 수량
 ) {
     fun cancel() {
@@ -27,7 +27,7 @@ class OrderItem(
     }
 
     companion object {
-        fun createOrderItem(item: Item, orderPrice: Int? = 0, count: Int): OrderItem {
+        fun createOrderItem(item: Item, orderPrice: Int, count: Int): OrderItem {
             return OrderItem(
                 item = item,
                 orderPrice =  orderPrice,

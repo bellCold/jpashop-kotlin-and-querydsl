@@ -18,11 +18,10 @@ class OrderRepository(private val em: EntityManager) {
         return em.find(Order::class.java, id)
     }
 
-    fun findAll(id: Long): List<Order> {
+    fun findAll(): List<Order> {
         return em.createQuery("select o from Order o", Order::class.java)
             .resultList
     }
-
 
     fun findAllByString(orderSearch: OrderSearch): List<Order?> {
         var jpql = "select o from Order o join o.member m"
@@ -61,5 +60,25 @@ class OrderRepository(private val em: EntityManager) {
         }
 
         return query.resultList
+    }
+
+    fun findAllWithItem(): List<Order> {
+        return em.createQuery(
+            "select distinct o from Order o" +
+                    " join fetch o.member m" +
+                    " join fetch o.delivery d" +
+                    " join fetch o.orderItems oi" +
+                    " join fetch oi.item i", Order::class.java
+        ).resultList
+    }
+
+    fun findAllWithMemberDelivery(offset: Int, limit: Int): List<Order> {
+        return em.createQuery(
+            "select o from Order o" +
+                    " join fetch o.member m" +
+                    " join fetch o.delivery d", Order::class.java)
+            .setFirstResult(offset)
+            .setMaxResults(limit)
+            .resultList
     }
 }

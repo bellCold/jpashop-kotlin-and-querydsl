@@ -1,11 +1,10 @@
 package com.kotlin.migration.jpashop.api
 
-import com.kotlin.migration.jpashop.api.response.Result
+import com.kotlin.migration.jpashop.api.response.ApiResponse
 import com.kotlin.migration.jpashop.domain.Member
 import com.kotlin.migration.jpashop.service.MemberService
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
-import java.util.stream.Collectors
 
 @RestController
 class MemberApiController(private val memberService: MemberService) {
@@ -38,10 +37,8 @@ class MemberApiController(private val memberService: MemberService) {
     }
 
     @GetMapping("/api/v2/members")
-    fun memberListV2(): Result<List<MemberDto>> {
-        return Result(memberService.findMembers()
-            .map { m -> MemberDto(m.name) }
-            .toList())
+    fun memberListV2(): ApiResponse<List<MemberDto>> {
+        return ApiResponse(memberService.findMembers().map { m -> MemberDto(m.name) }.toList())
     }
 
     data class MemberDto(val name: String)
