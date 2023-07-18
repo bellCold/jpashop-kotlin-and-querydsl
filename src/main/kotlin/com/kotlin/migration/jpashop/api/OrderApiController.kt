@@ -5,7 +5,6 @@ import com.kotlin.migration.jpashop.domain.Address
 import com.kotlin.migration.jpashop.domain.Order
 import com.kotlin.migration.jpashop.domain.OrderItem
 import com.kotlin.migration.jpashop.repository.OrderJpaRepository
-import com.kotlin.migration.jpashop.repository.OrderRepository
 import com.kotlin.migration.jpashop.repository.order.query.OrderQueryDtos
 import com.kotlin.migration.jpashop.repository.order.query.OrderQueryRepository
 import org.springframework.data.domain.PageRequest

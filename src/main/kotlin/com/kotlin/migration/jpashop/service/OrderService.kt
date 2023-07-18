@@ -18,7 +18,6 @@ class OrderService(
         val member: Member = memberRepository.findById(memberId).orElseThrow { RuntimeException("Member not found") }
         val item: Item = itemRepository.findById(itemId).orElseThrow { RuntimeException("Item not found") }
 
-
         // 배송정보 생성
         val delivery = Delivery(
             address = member.address,
@@ -40,7 +39,6 @@ class OrderService(
         return orderJpaRepository.save(order).id
     }
 
-
     @Transactional
     fun cancelOrder(orderId: Long) {
         val order = orderJpaRepository.findById(orderId).orElseThrow { RuntimeException("Order with ID $orderId not found") }
@@ -48,7 +46,6 @@ class OrderService(
     }
 
     fun findOrders(orderSearch: OrderSearch): List<Order>? {
-//        return orderJpaRepository.findAllByString(orderSearch)
         return null
     }
 }

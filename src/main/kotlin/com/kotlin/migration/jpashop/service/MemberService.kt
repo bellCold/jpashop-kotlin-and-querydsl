@@ -37,6 +37,6 @@ class MemberService(
     @Transactional
     fun update(id: Long, name: String) {
         val member = memberRepository.findById(id).orElseThrow { RuntimeException("Member not found") }
-        member.name = name
+        member.update(name)
     }
 }
