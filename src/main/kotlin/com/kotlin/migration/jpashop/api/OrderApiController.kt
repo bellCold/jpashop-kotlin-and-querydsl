@@ -5,6 +5,8 @@ import com.kotlin.migration.jpashop.domain.Address
 import com.kotlin.migration.jpashop.domain.Order
 import com.kotlin.migration.jpashop.domain.OrderItem
 import com.kotlin.migration.jpashop.repository.OrderRepository
+import com.kotlin.migration.jpashop.repository.order.query.OrderQueryDtos
+import com.kotlin.migration.jpashop.repository.order.query.OrderQueryRepository
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -13,6 +15,7 @@ import java.time.LocalDateTime
 @RestController
 class OrderApiController(
     private val orderRepository: OrderRepository,
+    private val orderQueryRepository: OrderQueryRepository,
 ) {
 
     @GetMapping("/api/v1/orders")
@@ -52,7 +55,7 @@ class OrderApiController(
     }
 
     @GetMapping("/api/v3.1/orders")
-    fun ordersV3_page(
+    fun ordersV3Page(
         @RequestParam(defaultValue = "0") offset: Int,
         @RequestParam(defaultValue = "0") limit: Int,
     ): ApiResponse<List<OrderDto>> {
@@ -61,6 +64,11 @@ class OrderApiController(
                 .map(::OrderDto)
                 .toList()
         )
+    }
+
+    @GetMapping("/api/v4/orders")
+    fun ordersV4(): ApiResponse<List<OrderQueryDtos>> {
+        return ApiResponse(orderQueryRepository.findOrderQueryDtos())
     }
 
     data class OrderDto(
