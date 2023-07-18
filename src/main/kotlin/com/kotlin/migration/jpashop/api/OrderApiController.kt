@@ -4,9 +4,11 @@ import com.kotlin.migration.jpashop.api.response.ApiResponse
 import com.kotlin.migration.jpashop.domain.Address
 import com.kotlin.migration.jpashop.domain.Order
 import com.kotlin.migration.jpashop.domain.OrderItem
+import com.kotlin.migration.jpashop.repository.OrderJpaRepository
 import com.kotlin.migration.jpashop.repository.OrderRepository
 import com.kotlin.migration.jpashop.repository.order.query.OrderQueryDtos
 import com.kotlin.migration.jpashop.repository.order.query.OrderQueryRepository
+import org.springframework.data.domain.PageRequest
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -14,13 +16,13 @@ import java.time.LocalDateTime
 
 @RestController
 class OrderApiController(
-    private val orderRepository: OrderRepository,
+    private val orderJpaRepository: OrderJpaRepository,
     private val orderQueryRepository: OrderQueryRepository,
 ) {
 
     @GetMapping("/api/v1/orders")
     fun ordersV1(): List<Order> {
-        val orders = orderRepository.findAll()
+        val orders = orderJpaRepository.findAll()
 
         for (order in orders) {
             order.member.name
@@ -39,7 +41,7 @@ class OrderApiController(
     @GetMapping("/api/v2/orders")
     fun ordersV2(): ApiResponse<List<OrderDto>> {
         return ApiResponse(
-            orderRepository.findAll()
+            orderJpaRepository.findAll()
                 .map(::OrderDto)
                 .toList()
         )
@@ -48,7 +50,7 @@ class OrderApiController(
     @GetMapping("/api/v3/orders")
     fun ordersV3(): ApiResponse<List<OrderDto>> {
         return ApiResponse(
-            orderRepository.findAllWithItem()
+            orderJpaRepository.findAllWithItem()
                 .map(::OrderDto)
                 .toList()
         )
@@ -56,11 +58,11 @@ class OrderApiController(
 
     @GetMapping("/api/v3.1/orders")
     fun ordersV3Page(
-        @RequestParam(defaultValue = "0") offset: Int,
-        @RequestParam(defaultValue = "0") limit: Int,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int,
     ): ApiResponse<List<OrderDto>> {
         return ApiResponse(
-            orderRepository.findAllWithMemberDelivery(offset = offset, limit = limit)
+            orderJpaRepository.findAllWithMemberDelivery(pageable = PageRequest.of(page, size))
                 .map(::OrderDto)
                 .toList()
         )

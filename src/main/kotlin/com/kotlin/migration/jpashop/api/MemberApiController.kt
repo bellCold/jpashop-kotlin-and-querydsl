@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class MemberApiController(private val memberService: MemberService) {
 
-
     @PostMapping("/api/v1/members")
     fun saveMemberV1(@RequestBody @Valid member: Member): CreateMemberResponse {
         return CreateMemberResponse(id = memberService.join(member))

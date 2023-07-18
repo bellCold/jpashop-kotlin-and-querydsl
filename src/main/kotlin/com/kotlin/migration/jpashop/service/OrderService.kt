@@ -2,19 +2,16 @@ package com.kotlin.migration.jpashop.service
 
 import com.kotlin.migration.jpashop.domain.*
 import com.kotlin.migration.jpashop.domain.item.Item
-import com.kotlin.migration.jpashop.repository.ItemRepository
-import com.kotlin.migration.jpashop.repository.MemberRepository
-import com.kotlin.migration.jpashop.repository.OrderRepository
-import com.kotlin.migration.jpashop.repository.OrderSearch
+import com.kotlin.migration.jpashop.repository.*
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional(readOnly = true)
 class OrderService(
-    private val orderRepository: OrderRepository,
+    private val orderJpaRepository: OrderJpaRepository,
     private val memberRepository: MemberRepository,
-    private val itemRepository: ItemRepository
+    private val itemRepository: ItemRepository,
 ) {
     @Transactional
     fun order(memberId: Long, itemId: Long, count: Int): Long {
@@ -40,16 +37,18 @@ class OrderService(
             orderItems = arrayOf(orderItem)
         )
 
-        return orderRepository.save(order).id
+        return orderJpaRepository.save(order).id
     }
 
 
     @Transactional
     fun cancelOrder(orderId: Long) {
-        orderRepository.findById(orderId).cancel()
+        val order = orderJpaRepository.findById(orderId).orElseThrow { RuntimeException("Order with ID $orderId not found") }
+        order.cancel()
     }
 
-    fun findOrders(orderSearch: OrderSearch): List<Order?> {
-        return orderRepository.findAllByString(orderSearch)
+    fun findOrders(orderSearch: OrderSearch): List<Order>? {
+//        return orderJpaRepository.findAllByString(orderSearch)
+        return null
     }
 }
