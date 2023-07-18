@@ -81,4 +81,12 @@ class OrderRepository(private val em: EntityManager) {
             .setMaxResults(limit)
             .resultList
     }
+
+    fun findAllWithMemberDelivery(): List<Order> {
+        return em.createQuery(
+            "select o from Order o" +
+                    " join fetch o.member m" +
+                    " join fetch o.delivery d", Order::class.java)
+            .resultList
+    }
 }
