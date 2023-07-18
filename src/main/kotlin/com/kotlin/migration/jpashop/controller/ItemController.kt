@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping
 
 @Controller
 class ItemController(
-    private val itemService: ItemService
+    private val itemService: ItemService,
 ) {
 
     @GetMapping("/items/new")

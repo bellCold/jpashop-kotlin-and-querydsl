@@ -25,7 +25,6 @@ class Order(
 
     @Enumerated(EnumType.STRING)
     var status: OrderStatus
-
 ) {
     // 연관관계 메소드
     private fun addOrderItem(orderItem: OrderItem) {

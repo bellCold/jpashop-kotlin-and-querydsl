@@ -6,17 +6,13 @@ import com.kotlin.migration.jpashop.service.MemberService
 import com.kotlin.migration.jpashop.service.OrderService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
 
 @Controller
 class OrderController(
     private val orderService: OrderService,
     private val memberService: MemberService,
-    private val itemService: ItemService
+    private val itemService: ItemService,
 ) {
 
     @GetMapping("/order")
@@ -31,7 +27,7 @@ class OrderController(
     fun order(
         @RequestParam memberId: Long,
         @RequestParam itemId: Long,
-        @RequestParam count: Int
+        @RequestParam count: Int,
     ): String {
         orderService.order(memberId = memberId, itemId = itemId, count = count)
         return "redirect:/orders"

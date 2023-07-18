@@ -10,5 +10,5 @@ class Album(
     price: Int,
     stockQuantity: Int,
     val artist: String,
-    val etc: String
+    val etc: String,
 ) : Item(name = name, price = price, stockQuantity = stockQuantity)

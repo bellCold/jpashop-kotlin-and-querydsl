@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 class InitDb(
-    private val initService: InitService
+    private val initService: InitService,
 ) {
 
     @PostConstruct
@@ -22,7 +22,7 @@ class InitDb(
 @Component
 @Transactional
 class InitService(
-    private val em: EntityManager
+    private val em: EntityManager,
 ) {
     fun dbInit1() {
         val member = createMember(name = "userA", city = "서울", street = "1", zipcode = "11111")
@@ -38,7 +38,8 @@ class InitService(
         val orderItem2 = OrderItem.createOrderItem(item = book2, orderPrice = 20000, count = 2)
 
         val delivery = createDelivery(member)
-        val order = Order.createOrder(member = member, delivery = delivery, orderItems = arrayOf(orderItem1, orderItem2))
+        val order =
+            Order.createOrder(member = member, delivery = delivery, orderItems = arrayOf(orderItem1, orderItem2))
         em.persist(order)
     }
 

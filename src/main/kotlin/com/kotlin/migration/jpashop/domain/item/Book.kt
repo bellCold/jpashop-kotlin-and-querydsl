@@ -9,6 +9,12 @@ class Book(
     name: String,
     price: Int,
     stockQuantity: Int,
-    var author: String? = null,
-    var isbn: String? = null
-) : Item(name = name, price = price, stockQuantity = stockQuantity)
+    val author: String?,
+    val isbn: String?,
+) : Item(name = name, price = price, stockQuantity = stockQuantity) {
+    constructor(
+        name: String,
+        price: Int,
+        stockQuantity: Int,
+    ) : this(name, price, stockQuantity, null, null)
+}
